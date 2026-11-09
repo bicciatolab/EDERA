@@ -1,0 +1,57 @@
+# EDERA — conda/mamba environment
+#
+#     mamba env create -f environment.yml      # or: conda env create -f ...
+#     conda activate edera
+#     pip install -e .                         # from this directory (package/)
+#
+# Versions are pinned to the minor release EDERA 0.2.0 is tested against, so
+# conda still has room to solve across platforms. `requirements.txt` carries the
+# exact patch-level pins of the reference environment (Python 3.12, Linux
+# x86-64) if you need a bit-for-bit match.
+#
+# conda-forge ships pre-built binaries for pymetis, hnswlib and scikit-network, which
+# is why this file is the recommended install route over plain pip.
+
+name: edera
+
+channels:
+  - conda-forge
+
+dependencies:
+  - python=3.12
+
+  # --- core numerics ---------------------------------------------------------
+  - numpy=1.26
+  - pandas=2.3
+  - scipy=1.16
+  - numba=0.61                 # LDA (vb backend) and the decode kernels
+  - scikit-learn=1.8
+  - joblib=1.5
+  - tqdm=4.67
+
+  # --- graph construction / partitioning -------------------------------------
+  - umap-learn>=0.5.7          # fuzzy simplicial set (FSS)
+  - pymetis=2025.2             # METIS pseudo-cell partitioning
+  - hnswlib=0.8                # approximate kNN graph for clustering
+
+  # --- topic model -----------------------------------------------------------
+  - gensim=4.4                 # LDA
+
+  # --- clustering ------------------------------------------------------------
+  - scikit-network=0.33       # Leiden (F2)
+  - anndata=0.12               # only for the optional small-cluster merge
+
+  # --- plotting --------------------------------------------------------------
+  - matplotlib=3.10
+  - seaborn=0.13
+  - adjusttext>=1.3
+  - plotly=6.6                 # only needed when "html" is in plot_format
+
+  # --- checkpoint I/O --------------------------------------------------------
+  - pyarrow=20.0               # parquet checkpoints
+
+  # --- development / notebooks ----------------------------------------------
+  - pytest=9.1
+  - ipykernel=7.2
+
+  - pip

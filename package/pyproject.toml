@@ -1,0 +1,48 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "EDERA"
+version = "0.4.0"
+description = "Segmentation-free transcript-level topic modelling and spatial clustering for high-plex spatial transcriptomics."
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "numpy",
+    "pandas",
+    "scipy",
+    "numba",
+    "scikit-learn",
+    "joblib",
+    "tqdm",
+    "matplotlib",
+    "seaborn",
+    "adjustText",
+    "umap-learn",
+    "pymetis",
+    "gensim",
+    "hnswlib",
+    "scikit-network>=0.33",
+    "anndata",
+]
+
+[project.optional-dependencies]
+html = ["plotly"]
+checkpoint = ["pyarrow"]
+dev = ["pytest"]
+
+# The modules live directly in this directory (`package/`); map them to the
+# importable `EDERA` package so `import EDERA` works after an editable
+# install without renaming the source tree.
+[tool.setuptools]
+packages = ["EDERA"]
+
+[tool.setuptools.package-dir]
+EDERA = "."
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "slow: end-to-end pipeline runs (deselect with '-m \"not slow\"')",
+]
